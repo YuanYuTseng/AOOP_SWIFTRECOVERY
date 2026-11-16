@@ -1,0 +1,47 @@
+<svg viewBox="0 0 680 290" role="img" aria-label="兩個迴圈" xmlns="http://www.w3.org/2000/svg">
+<style>
+  text { font-family: "Times New Roman", "Liberation Serif", "DFKai-SB", "標楷體", "AR PL UKai TW", serif; fill: #000; }
+  .t  { font-size: 12px; }
+  .tb { font-size: 12.5px; font-weight: bold; }
+  .ts { font-size: 10.5px; fill: #333 !important; }
+  .tm { font-family: Consolas, "DejaVu Sans Mono", monospace !important; font-size: 10px; fill: #1f4e9c !important; }
+  .mid { text-anchor: middle; } .end { text-anchor: end; }
+  .proc { fill: #e8f0fb; stroke: #3b6fb5; stroke-width: 1.3; }
+  .io   { fill: #e4f4e1; stroke: #4a9a4a; stroke-width: 1.3; }
+  .dec  { fill: #fdf4d3; stroke: #c9a227; stroke-width: 1.3; }
+  .err  { fill: #fbe4e4; stroke: #c94444; stroke-width: 1.3; }
+  .ext  { fill: #f4f4f4; stroke: #666; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .main { fill: #d3e3fa; stroke: #1f4e9c; stroke-width: 2.2; }
+  .fn   { fill: #fff; stroke: #3b6fb5; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .wire { fill: none; stroke: #333; stroke-width: 1.2; }
+</style>
+<rect x="0" y="0" width="680" height="290" fill="#fff"/>
+  <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+  <rect class="ext" x="20" y="14" width="240" height="132" rx="6"/>
+  <text class="tb mid" x="140" y="38">SwiftPlan（不修改）</text>
+  <text class="ts mid" x="140" y="56">外層迴圈：約每秒 1 次</text>
+  <text class="t mid" x="140" y="84">1. 要求一張照片</text>
+  <text class="t mid" x="140" y="106">2. 選出下一個動作</text>
+  <text class="t mid" x="140" y="128">3. 送出動作，等待回覆</text>
+  <rect class="main" x="420" y="14" width="240" height="132" rx="6"/>
+  <text class="tb mid" x="540" y="38">Rewind（本專題）</text>
+  <text class="ts mid" x="540" y="56">內層迴圈：每秒檢查 10 次</text>
+  <text class="t mid" x="540" y="84">1. 移動手臂</text>
+  <text class="t mid" x="540" y="106">2. 檢查動作是否失敗</text>
+  <text class="t mid" x="540" y="128">3. 失敗就退回，換方式重試</text>
+  <path class="wire" d="M260 62H418" marker-end="url(#a1)"/>
+  <text class="ts mid" x="340" y="54">動作：pick orange</text>
+  <path class="wire" d="M420 112H262" marker-end="url(#a1)"/>
+  <text class="ts mid" x="340" y="104">回覆：狀態與照片</text>
+  <rect class="io" x="20" y="216" width="240" height="56" rx="28"/>
+  <text class="tb mid" x="140" y="240">使用者</text>
+  <text class="ts mid" x="140" y="258">輸入：put the orange in the box</text>
+  <path class="wire" d="M140 216V148" marker-end="url(#a1)"/>
+  <rect class="proc" x="420" y="216" width="240" height="56" rx="6"/>
+  <text class="tb mid" x="540" y="240">模擬器</text>
+  <text class="ts mid" x="540" y="258">Isaac Sim＋Franka，或自製 C++ 模擬器</text>
+  <path class="wire" d="M500 146V214" marker-end="url(#a1)"/>
+  <text class="ts end" x="494" y="186">關節指令</text>
+  <path class="wire" d="M580 216V148" marker-end="url(#a1)"/>
+  <text class="ts" x="586" y="186">精確位置</text>
+</svg>

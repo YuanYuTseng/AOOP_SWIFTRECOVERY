@@ -1,0 +1,67 @@
+<svg viewBox="0 0 680 452" role="img" aria-label="單一動作內的處理流程" xmlns="http://www.w3.org/2000/svg">
+<style>
+  text { font-family: "Times New Roman", "Liberation Serif", "DFKai-SB", "標楷體", "AR PL UKai TW", serif; fill: #000; }
+  .t  { font-size: 12px; }
+  .tb { font-size: 12.5px; font-weight: bold; }
+  .ts { font-size: 10.5px; fill: #333 !important; }
+  .tm { font-family: Consolas, "DejaVu Sans Mono", monospace !important; font-size: 10px; fill: #1f4e9c !important; }
+  .mid { text-anchor: middle; } .end { text-anchor: end; }
+  .proc { fill: #e8f0fb; stroke: #3b6fb5; stroke-width: 1.3; }
+  .io   { fill: #e4f4e1; stroke: #4a9a4a; stroke-width: 1.3; }
+  .dec  { fill: #fdf4d3; stroke: #c9a227; stroke-width: 1.3; }
+  .err  { fill: #fbe4e4; stroke: #c94444; stroke-width: 1.3; }
+  .ext  { fill: #f4f4f4; stroke: #666; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .main { fill: #d3e3fa; stroke: #1f4e9c; stroke-width: 2.2; }
+  .fn   { fill: #fff; stroke: #3b6fb5; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .wire { fill: none; stroke: #333; stroke-width: 1.2; }
+</style>
+<rect x="0" y="0" width="680" height="452" fill="#fff"/>
+  <defs><marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+  <rect class="io" x="110" y="8" width="260" height="44" rx="22"/>
+  <text class="t mid" x="240" y="27">收到 SwiftPlan 的動作</text>
+  <text class="tm mid" x="240" y="43">SwiftPlanLink</text>
+  <path class="wire" d="M240 52V74" marker-end="url(#a3)"/>
+  <rect class="proc" x="110" y="76" width="260" height="44"/>
+  <text class="t mid" x="240" y="95">把動作拆成小段</text>
+  <text class="tm mid" x="240" y="111">ApproachSegment, GraspSegment, …</text>
+  <path class="wire" d="M240 120V142" marker-end="url(#a3)"/>
+  <rect class="proc" x="110" y="144" width="260" height="44"/>
+  <text class="t mid" x="240" y="163">存下檢查點，執行一小段</text>
+  <text class="tm mid" x="240" y="179">Checkpoint, Segment.run()</text>
+  <path class="wire" d="M240 188V212" marker-end="url(#a3)"/>
+  <polygon class="dec" points="240,214 370,248 240,282 110,248"/>
+  <text class="t mid" x="240" y="246">偵測到失敗？</text>
+  <text class="ts mid" x="240" y="262">每秒檢查 10 次</text>
+  <path class="wire" d="M240 282V304" marker-end="url(#a3)"/>
+  <text class="ts" x="246" y="298">否</text>
+  <polygon class="dec" points="240,306 370,340 240,374 110,340"/>
+  <text class="t mid" x="240" y="344">還有下一段？</text>
+  <path class="wire" d="M110 340H50V166H108" marker-end="url(#a3)"/>
+  <text class="ts" x="92" y="334">是</text>
+  <path class="wire" d="M240 374V396" marker-end="url(#a3)"/>
+  <text class="ts" x="246" y="390">否</text>
+  <rect class="io" x="110" y="398" width="260" height="44" rx="22"/>
+  <text class="t mid" x="240" y="417">回覆 SwiftPlan：完成</text>
+  <text class="tm mid" x="240" y="433">status, salvaged, attempts</text>
+
+  <path class="wire" d="M370 248H428" marker-end="url(#a3)"/>
+  <text class="ts" x="392" y="242">是</text>
+  <polygon class="dec" points="540,214 650,248 540,282 430,248"/>
+  <text class="t mid" x="540" y="252">超過重試上限？</text>
+  <path class="wire" d="M540 214V190" marker-end="url(#a3)"/>
+  <text class="ts" x="546" y="206">否</text>
+  <rect class="main" x="430" y="144" width="220" height="44"/>
+  <text class="t mid" x="540" y="163">選擇修復方式</text>
+  <text class="tm mid" x="540" y="179">salvage_search()</text>
+  <path class="wire" d="M540 144V122" marker-end="url(#a3)"/>
+  <rect class="main" x="430" y="76" width="220" height="44"/>
+  <text class="t mid" x="540" y="95">退回檢查點，執行新的小段</text>
+  <text class="tm mid" x="540" y="111">RepairStrategy.apply()</text>
+  <path class="wire" d="M430 98H398V201H242" marker-end="url(#a3)"/>
+  <text class="ts" x="300" y="197">再次檢查</text>
+  <path class="wire" d="M540 282V318" marker-end="url(#a3)"/>
+  <text class="ts" x="546" y="304">是</text>
+  <rect class="err" x="430" y="320" width="220" height="44"/>
+  <text class="t mid" x="540" y="339">停在安全姿勢，交還 SwiftPlan</text>
+  <text class="tm mid" x="540" y="355">salvaged = false</text>
+</svg>

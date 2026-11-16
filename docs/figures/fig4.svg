@@ -1,0 +1,116 @@
+<svg viewBox="0 0 720 640" role="img" aria-label="Rewind 系統架構圖" xmlns="http://www.w3.org/2000/svg">
+<style>
+  text { font-family: "Times New Roman", "Liberation Serif", "DFKai-SB", "標楷體", "AR PL UKai TW", serif; fill: #000; }
+  .t  { font-size: 12px; }
+  .tb { font-size: 12.5px; font-weight: bold; }
+  .ts { font-size: 10.5px; fill: #333 !important; }
+  .tm { font-family: Consolas, "DejaVu Sans Mono", monospace !important; font-size: 10px; fill: #1f4e9c !important; }
+  .mid { text-anchor: middle; } .end { text-anchor: end; }
+  .proc { fill: #e8f0fb; stroke: #3b6fb5; stroke-width: 1.3; }
+  .io   { fill: #e4f4e1; stroke: #4a9a4a; stroke-width: 1.3; }
+  .dec  { fill: #fdf4d3; stroke: #c9a227; stroke-width: 1.3; }
+  .err  { fill: #fbe4e4; stroke: #c94444; stroke-width: 1.3; }
+  .ext  { fill: #f4f4f4; stroke: #666; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .main { fill: #d3e3fa; stroke: #1f4e9c; stroke-width: 2.2; }
+  .fn   { fill: #fff; stroke: #3b6fb5; stroke-width: 1.3; stroke-dasharray: 5 3; }
+  .wire { fill: none; stroke: #333; stroke-width: 1.2; }
+</style>
+<rect x="0" y="0" width="720" height="640" fill="#fff"/>
+  <defs><marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#333"/></marker></defs>
+  <rect class="ext" x="200" y="8" width="320" height="54" rx="6"/>
+  <text class="tb mid" x="360" y="30">SwiftPlan 用戶端（外部程式，不修改）</text>
+  <text class="ts mid" x="360" y="48">看照片 → 選動作 → 送出，約每秒 1 次</text>
+  <path class="wire" d="M300 62V156" marker-end="url(#a4)"/>
+  <path class="wire" d="M420 158V64" marker-end="url(#a4)"/>
+  <text class="ts end" x="292" y="78">SwiftPlan 送來的請求</text>
+  <text class="tm end" x="292" y="92">observe</text>
+  <text class="tm end" x="292" y="105">pick &lt;object&gt;</text>
+  <text class="tm end" x="292" y="118">up</text>
+  <text class="tm end" x="292" y="131">putdown tray | box</text>
+  <text class="tm end" x="292" y="144">finished</text>
+  <text class="ts mid" x="360" y="106">JSON / TCP</text>
+  <text class="tm mid" x="360" y="120">127.0.0.1:6547</text>
+  <text class="ts" x="428" y="78">Rewind 送回的回覆</text>
+  <text class="tm" x="428" y="92">status, execution_state</text>
+  <text class="tm" x="428" y="105">image_base64</text>
+  <text class="tm" x="428" y="118">+ salvaged, failure, attempts</text>
+  <text class="ts" x="428" y="133">（＋：新增的選填欄位）</text>
+
+  <rect class="proc" x="20" y="158" width="160" height="62" rx="6"/>
+  <text class="tb mid" x="100" y="184">任務檔</text>
+  <text class="ts mid" x="100" y="202">檢查頻率、重試上限、權重</text>
+  <rect class="proc" x="200" y="158" width="320" height="62" rx="6"/>
+  <text class="tb mid" x="360" y="177">PlannerLink</text>
+  <text class="ts mid" x="360" y="194">SwiftPlanLink：解析上面的訊息，轉成內部請求</text>
+  <text class="ts mid" x="360" y="210">ScriptedLink：從任務清單送出同樣的請求（測試用）</text>
+  <rect class="proc" x="540" y="158" width="160" height="62" rx="6"/>
+  <text class="tb mid" x="620" y="184">MotionRecorder</text>
+  <text class="ts mid" x="620" y="202">存下可重播的紀錄</text>
+
+  <path class="wire" d="M100 220V248" marker-end="url(#a4)"/>
+  <path class="wire" d="M360 222V248" marker-start="url(#a4)" marker-end="url(#a4)"/>
+  <text class="tm" x="368" y="239">ActionRequest / ActionResult</text>
+  <path class="wire" d="M620 250V222" marker-end="url(#a4)"/>
+
+  <rect class="proc" x="20" y="250" width="160" height="70" rx="6"/>
+  <text class="tb mid" x="100" y="274">ModeMachine</text>
+  <text class="ts mid" x="100" y="291">Approach、Carry、Recover</text>
+  <text class="ts mid" x="100" y="306">每個階段是一個類別</text>
+  <rect class="main" x="200" y="250" width="320" height="70" rx="6"/>
+  <text class="tb mid" x="360" y="274" style="font-size:14px">MotionExecutor</text>
+  <text class="ts mid" x="360" y="291">一次執行動作的一小段：</text>
+  <text class="ts mid" x="360" y="306">存檢查點 → 移動 → 檢查是否失敗</text>
+  <rect class="proc" x="540" y="250" width="160" height="70" rx="6"/>
+  <text class="tb mid" x="620" y="274">MessageBoard</text>
+  <text class="ts mid" x="620" y="291">發布與訂閱</text>
+  <text class="tm mid" x="620" y="306">GRASP_LOST, STALLED</text>
+  <path class="wire" d="M180 285H198" marker-end="url(#a4)"/>
+  <path class="wire" d="M520 285H538" marker-end="url(#a4)"/>
+
+  <path class="wire" d="M360 320V340"/>
+  <path class="wire" d="M100 340H620"/>
+  <path class="wire" d="M100 340V358" marker-end="url(#a4)"/>
+  <path class="wire" d="M273 340V358" marker-end="url(#a4)"/>
+  <path class="wire" d="M447 340V358" marker-end="url(#a4)"/>
+  <path class="wire" d="M620 340V358" marker-end="url(#a4)"/>
+
+  <rect class="proc" x="20" y="360" width="160" height="120" rx="6"/>
+  <text class="tb mid" x="100" y="382">FailureDetector</text>
+  <text class="ts mid" x="100" y="398">每秒檢查 10 次</text>
+  <text class="tm mid" x="100" y="420">GraspLostDetector</text>
+  <text class="tm mid" x="100" y="435">CollisionDetector</text>
+  <text class="tm mid" x="100" y="450">StallDetector</text>
+  <text class="tm mid" x="100" y="465">GlitchDetector</text>
+  <rect class="proc" x="193" y="360" width="160" height="120" rx="6"/>
+  <text class="tb mid" x="273" y="382">RepairStrategy</text>
+  <text class="ts mid" x="273" y="398">回傳一個新的小段</text>
+  <text class="tm mid" x="273" y="420">RegraspWithOffset</text>
+  <text class="tm mid" x="273" y="435">DetourWaypoint</text>
+  <text class="tm mid" x="273" y="450">SlowDown</text>
+  <text class="tm mid" x="273" y="465">ChangeApproachAngle</text>
+  <rect class="proc" x="367" y="360" width="160" height="120" rx="6"/>
+  <text class="tb mid" x="447" y="382">Controller</text>
+  <text class="ts mid" x="447" y="398">把手部移動轉成關節指令</text>
+  <text class="tm mid" x="447" y="428">TabletopController</text>
+  <text class="tm mid" x="447" y="443">IsaacRmpController</text>
+  <rect class="proc" x="540" y="360" width="160" height="120" rx="6"/>
+  <text class="tb mid" x="620" y="382">RobotBackend</text>
+  <text class="ts mid" x="620" y="398">推進模擬、存取檢查點、拍照</text>
+  <text class="tm mid" x="620" y="428">TabletopBackend</text>
+  <text class="tm mid" x="620" y="443">IsaacFrankaBackend</text>
+  <path class="wire" d="M527 420H538" marker-end="url(#a4)"/>
+
+  <path class="wire" d="M100 480V518" marker-end="url(#a4)"/>
+  <path class="wire" d="M273 480V518" marker-end="url(#a4)"/>
+  <path class="wire" d="M620 480V518" marker-end="url(#a4)"/>
+  <rect class="fn" x="20" y="520" width="507" height="84" rx="6"/>
+  <text class="tb mid" x="273" y="543">salvage_search()：一般函式，不是類別</text>
+  <text class="ts mid" x="273" y="561">失敗時：退回檢查點，在模擬中嘗試適用的修復方式，</text>
+  <text class="ts mid" x="273" y="576">依時間、風險、平順度評分，保留最好的一個</text>
+  <text class="ts mid" x="273" y="591">超過重試上限：停在安全姿勢，交還 SwiftPlan</text>
+  <rect class="proc" x="540" y="520" width="160" height="84" rx="6"/>
+  <text class="tb mid" x="620" y="543">tabletop_core (C++17)</text>
+  <text class="ts mid" x="620" y="561">夾取與碰撞物理、檢查點</text>
+  <text class="ts mid" x="620" y="576">以 pybind11 綁定到 Python</text>
+  <text class="ts" x="20" y="628">虛線灰框：外部程式。深藍框：每個動作都會經過。第三列：抽象基底類別與其子類別。虛線藍框：函式。</text>
+</svg>
